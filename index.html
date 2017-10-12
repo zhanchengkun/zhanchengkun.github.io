@@ -1,35 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <style type="text/css">
+        canvas{border:dashed 2px #CCC}
+    </style> 
+ <script type="text/javascript" src="arrow.js"></script>
+    <script type="text/javascript">
+        function $$(id){
+            return document.getElementById(id);
+        }
+		
+		var x=20,y=20,w=130,h=60,fx=45;
+        function pageLoad(){
+			var a1=new window.mapleque.arrow();
+			a1.setPara({arrow_size:0.1, arrow_sharp:0.05})
+ 
+            var can = $$('can');
+            var cans = can.getContext('2d');
+		
+			 cans.beginPath(); 
+            //cans.strokeStyle = 'red';
+var fontStyle="bold 26px '宋体','微软雅黑'";
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+drawS(cans,a1,fontStyle,'审批人',true)
+y+=140; 
+drawS(cans,a1,fontStyle,'审円',true)
+y+=140;    
+drawS(cans,a1,fontStyle,'批准人',true)
+         
 
-    <title>Zhanchengkun.GitHub.io by zhanchengkun</title>
-  </head>
+			cans.closePath(); 
+        }
 
-  <body>
+		function  drawS(canvas,arrow,fontStyle,fText,end){
 
-    <header>
-      <div class="container">
-        <h1>Zhanchengkun.GitHub.io</h1>
-        <h2></h2>
+			canvas.strokeRect(x,y,w,h); 
+			if(end){
+			arrow.set({x:w/2+20,y:h+y},{x:w/2+20,y:y+140}); 
+			arrow.paint(canvas); }
+			canvas.font="bold 26px '宋体','微软雅黑'"
+			canvas.fillText(fText, fx, y+40);
+		
+		}
+		
+		function apply(){ 
+ var a1=new window.mapleque.arrow();
+a1.setPara({arrow_size:0.1, arrow_sharp:0.05}) 
+ var can = $$('can');
+ var cans = can.getContext('2d'); 
+ var fontStyle="bold 26px '宋体','微软雅黑'";
+var v=document.getElementById('c').value.split("\n");
+var ch=160
+document.getElementById('can').height=v.length*ch ;
+ cans.beginPath(); 
+for (var i=0;i<v.length;i++)
+{
+  console.log(v[i])
+    console.log(v[i].length);
+ if(i==v.length-1){
+  drawS(cans,a1,fontStyle,v[i],false) 
+ break;
+ }
+ 
+  
+ drawS(cans,a1,fontStyle,v[i],true)
+y+=140; 
+}
+ x=20,y=20,w=130,h=60,fx=45;
+		cans.closePath(); 
 
-        <section id="downloads">
-          <a href="https://github.com/zhanchengkun" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
-        <p>哈</p>
-      </section>
-    </div>
-
-    
-  </body>
+		}
+    </script>
+ <!--    <body onload="pageLoad();"> -->
+    <body>
+	<textarea id="c"  style="height:300px;width:500px;"></textarea>
+<button onclick="apply()">submit</button>
+   <canvas id="can" width="400px" height="160px"></canvas>
+     <!--    <canvas id="can" width="400px" height="160px"></canvas> -->
+    </body>
 </html>
